@@ -72,7 +72,7 @@ namespace jiratimesheetsconsole.Service
                 catch (Exception ex)
                 {
                     //TODO: Log Exception
-
+                    throw;
                 }
 
 
@@ -110,6 +110,8 @@ namespace jiratimesheetsconsole.Service
                     break;
                 case HttpStatusCode.BadRequest:
                     throw new HttpRequestException("Error: Status Code 400. The request was invalid. You may be missing a required argument or provided bad data. An error message will be returned explaining what happened.");
+                case HttpStatusCode.Unauthorized:
+                    throw new HttpRequestException("Error: Status Code 401. Unauthorized request. Most likely user credentials are invalid.");
                 case HttpStatusCode.Forbidden:
                     throw new HttpRequestException("Error: Status Code 403. You don't have permission to complete the operation or access the resource.");
                 case HttpStatusCode.NotFound:

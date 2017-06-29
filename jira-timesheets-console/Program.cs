@@ -13,22 +13,52 @@ namespace jiratimesheetsconsole
         public static void Main(string[] args)
         {
             const string BASEURL = "https://avid-ondemand.atlassian.net";
-            const string USERNAME = "denys.holovin@avid.com";
-            const string PASSWORD = "ghE4sAD~!";
-
             DateTime start = DateTime.ParseExact("2017/06/12", "yyyy/MM/dd", CultureInfo.InvariantCulture);
             DateTime end = DateTime.ParseExact("2017/06/16", "yyyy/MM/dd", CultureInfo.InvariantCulture);
 
+            Console.WriteLine("Enter your Jira username:");
+            string USERNAME = Console.ReadLine();
+
+            Console.WriteLine("Enter your Jira password:");
+            string PASSWORD = string.Empty;
+            ConsoleKeyInfo key;
+            do
+            {
+                key = Console.ReadKey(true);
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    PASSWORD += key.KeyChar;
+                    Console.Write("*");
+                }
+                else
+                {
+                    if (key.Key == ConsoleKey.Backspace && PASSWORD.Length > 0)
+                    {
+                        PASSWORD = PASSWORD.Substring(0, (PASSWORD.Length - 1));
+                        Console.Write("\b \b");
+                    }
+                }
+            }
+            while (key.Key != ConsoleKey.Enter);
+
+            Console.WriteLine();
+
+
+
             JiraTimecards myJiraIssuesWithWorkLogged = null;
-            
+
             try
             {
                 JiraTimesheetManager timesheetManager = new JiraTimesheetManager(BASEURL, USERNAME, PASSWORD);
                 myJiraIssuesWithWorkLogged = timesheetManager.GetTimecards(start, end).GetAwaiter().GetResult();
             }
-            catch(System.AggregateException exAggregate)
+            catch (System.AggregateException exAggregate)
             {
-                Console.WriteLine("Error: " + exAggregate.Message);                
+                Console.WriteLine("Error: " + exAggregate.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
             }
 
 
@@ -60,14 +90,14 @@ namespace jiratimesheetsconsole
                         tab = "\t";
 
                     //Displat Children
-                    Console.WriteLine("{4}{0} - [{1}] {2}: {3}", 
-                        item.Fields.Type.TypeName, 
-                        item.Key, 
-                        item.Fields.Summary, 
+                    Console.WriteLine("{4}{0} - [{1}] {2}: {3}",
+                        item.Fields.Type.TypeName,
+                        item.Key,
+                        item.Fields.Summary,
                         ConvertSecondsToHumanReadableFormat(item.Fields.Worklog.WorklogEntries, start, end),
                         tab);
                 }
-                
+
             }
 
             Console.ReadKey();
