@@ -13,35 +13,38 @@ namespace jiratimesheetsconsole
         public static void Main(string[] args)
         {
             const string BASEURL = "https://avid-ondemand.atlassian.net";
-            DateTime start = DateTime.ParseExact("2017/06/12", "yyyy/MM/dd", CultureInfo.InvariantCulture);
-            DateTime end = DateTime.ParseExact("2017/06/16", "yyyy/MM/dd", CultureInfo.InvariantCulture);
+            string USERNAME = "denys.holovin@avid.com";
+            string PASSWORD = "*******!";
 
-            Console.WriteLine("Enter your Jira username:");
-            string USERNAME = Console.ReadLine();
+            DateTime start = DateTime.ParseExact("2017/06/26", "yyyy/MM/dd", CultureInfo.InvariantCulture);
+            DateTime end = DateTime.ParseExact("2017/07/01", "yyyy/MM/dd", CultureInfo.InvariantCulture);
 
-            Console.WriteLine("Enter your Jira password:");
-            string PASSWORD = string.Empty;
-            ConsoleKeyInfo key;
-            do
-            {
-                key = Console.ReadKey(true);
-                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
-                {
-                    PASSWORD += key.KeyChar;
-                    Console.Write("*");
-                }
-                else
-                {
-                    if (key.Key == ConsoleKey.Backspace && PASSWORD.Length > 0)
-                    {
-                        PASSWORD = PASSWORD.Substring(0, (PASSWORD.Length - 1));
-                        Console.Write("\b \b");
-                    }
-                }
-            }
-            while (key.Key != ConsoleKey.Enter);
+            //Console.WriteLine("Enter your Jira username:");
+            //string USERNAME = Console.ReadLine();
 
-            Console.WriteLine();
+            //Console.WriteLine("Enter your Jira password:");
+            //string PASSWORD = string.Empty;
+            //ConsoleKeyInfo key;
+            //do
+            //{
+            //    key = Console.ReadKey(true);
+            //    if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+            //    {
+            //        PASSWORD += key.KeyChar;
+            //        Console.Write("*");
+            //    }
+            //    else
+            //    {
+            //        if (key.Key == ConsoleKey.Backspace && PASSWORD.Length > 0)
+            //        {
+            //            PASSWORD = PASSWORD.Substring(0, (PASSWORD.Length - 1));
+            //            Console.Write("\b \b");
+            //        }
+            //    }
+            //}
+            //while (key.Key != ConsoleKey.Enter);
+
+            //Console.WriteLine();
 
 
 
